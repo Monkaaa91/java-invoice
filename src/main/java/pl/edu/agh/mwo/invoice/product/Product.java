@@ -13,14 +13,14 @@ public abstract class Product {
         if (name == null) {
             throw new java.lang.IllegalArgumentException("name cannot be null");
         }
-        if (name == "") {
+        if (name.isBlank()) {
             throw new java.lang.IllegalArgumentException("name cannot be empty");
         }
         this.name = name;
         if (price == null) {
             throw new java.lang.IllegalArgumentException("price cannot be null");
         }
-        if (price.compareTo(BigDecimal.ZERO) <= 0) {
+        if (price.compareTo(BigDecimal.ZERO) < 0) {
             throw new java.lang.IllegalArgumentException("price cannot be negative");
         }
         this.price = price;
