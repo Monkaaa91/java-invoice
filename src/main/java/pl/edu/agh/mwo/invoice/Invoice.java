@@ -18,6 +18,13 @@ public class Invoice {
 
     public void addProduct(Product product, Integer quantity) {
          this.products.put(product, quantity);
+         if(quantity <= 0){
+             throw new IllegalArgumentException("Quantity should be greater than 0");
+         }
+         if(products == null || products.isEmpty()) {
+
+             throw new IllegalArgumentException("Product is null");
+         }
 
     }
 
@@ -37,14 +44,26 @@ public class Invoice {
     public BigDecimal getTax() {
 
       BigDecimal tax =  BigDecimal.ZERO;
-         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+      for (Product product : this.products.keySet()) {
+          Integer quantity = this.products.get(product);
+          BigDecimal pricetax = product.getPriceWithTax().subtract(product.getPrice());
+          pricetax = pricetax.multiply(BigDecimal.valueOf(quantity));
+          tax = tax.add(pricetax);
+      }
 
-         }
-
-    return tax;
+    return getSubtotal().multiply(tax);
     }
 
 
-    public BigDecimal getTotal() {return  BigDecimal.ZERO;}
+    public BigDecimal getTotal() {
+         BigDecimal Total =  BigDecimal.ZERO;
+         for (Product product : this.products.keySet()) {
+         Integer quantity = this.products.get(product);
+         BigDecimal price = product.getPriceWithTax();
+         price = price.multiply(BigDecimal.valueOf(quantity));
+         Total = Total.add(price);
+         }
+         return Total;
+    }
 }
 
