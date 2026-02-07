@@ -17,16 +17,17 @@ public class Invoice {
     }
 
     public void addProduct(Product product, Integer quantity) {
-         this.products.put(product, quantity);
-         if(quantity <= 0){
-             throw new IllegalArgumentException("Quantity should be greater than 0");
-         }
-         if(products == null || products.isEmpty()) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product is null");
+        }
+        if (quantity == null || quantity <= 0) {
+            throw new IllegalArgumentException("Quantity should be greater than 0");
+        }
 
-             throw new IllegalArgumentException("Product is null");
-         }
-
+        this.products.put(product, quantity);
     }
+
+
 
     public BigDecimal getSubtotal() {
 
@@ -51,7 +52,7 @@ public class Invoice {
           tax = tax.add(pricetax);
       }
 
-    return getSubtotal().multiply(tax);
+    return tax;
     }
 
 
